@@ -1,8 +1,9 @@
 package fourwins;
 
+import fourwins.Enums.Color;
 import fourwins.Exception.ColumnFullException;
 
-public class Bord {
+public class Bord extends GameObject{
     private Cell[][] bord;
 
     public Bord() {
@@ -13,46 +14,48 @@ public class Bord {
         return bord;
     }
 
-    public void dropToken(int columnIndex, Token token) throws ColumnFullException {
-        columnIndex = columnIndex - 1;
-        for (int i = 0; i < bord[columnIndex].length; i++) {
-            if (bord[5-i][columnIndex] == null) {
-                bord[5-i][columnIndex] = new Cell(token);
-                break;
+    public void dropToken(int column, Token token) throws ColumnFullException {
+        if (canDrop(column)) {
+            column -= 1;
+            for (int row = 0; row < bord[row].length-1; row++) {
+                if (bord[5-row][column] == null) {
+                    bord[5-row][column] = new Cell(token);
+                    break;
+                }
             }
+            //bord[5][6] = new Cell(token);
         }
     }
 
-
-
-    // in build rn
-    public boolean canDrop(int columnIndex) {
-        columnIndex = columnIndex - 1;
-        for (int i = 0; i < bord[columnIndex].length; i++) {
-            if (bord[5 - i][columnIndex] == null) {
+    public boolean canDrop(int column) {
+        column -= 1;
+        for (int row = 0; row < bord[row].length-1; row++) {
+            if (bord[5-row][column] == null) {
                 return true;
             }
         }
         return false;
     }
 
-    public String printBoard() {
+    public StringBuilder buildBord() {
         StringBuilder sb = new StringBuilder();
         for (Cell[] x : bord) {
-            sb.append(System.getProperty("line.separator"));
             for (Cell y : x) {
                 if (y == null) {
-                    sb.append(" [   ]");
+                    sb.append("[ ]");
                 } else if (y.getToken().getColor() == Color.YELLOW) {
-                    System.out.println(y.getToken().getColor());
-                    sb.append(" [ O ]");
+                    sb.append("[O]");
                 } else if (y.getToken().getColor() == Color.RED) {
-                    System.out.println(y.getToken().getColor());
-                    sb.append(" [ X ]");
+                    sb.append("[X]");
                 }
             }
-
+            sb.append("\n");
         }
-        return sb.toString();
+        return sb;
+    }
+
+    @Override
+    public String toString(Object o) {
+        return o.toString();
     }
 }

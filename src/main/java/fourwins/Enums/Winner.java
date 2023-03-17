@@ -1,4 +1,4 @@
-package fourwins;
+package fourwins.Enums;
 
 public enum Winner {
     RED,
