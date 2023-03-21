@@ -1,22 +1,27 @@
 package fourwins;
 
+import com.sun.source.tree.ReturnTree;
 import fourwins.Enums.Color;
 
-public class Token{
+public class Token extends GameObject{
     private final Color color;
-    //private final Player player;
 
-    public Token(Color color) { //, Player player
+
+    public Token(Color color) {
         this.color = color;
-        //this.player = null;
     }
-
-
-    //public Player getPlayer() {
-    //    return player;
-    //}
 
     public Color getColor() {
         return color;
+    }
+
+    @Override
+    public String toString() {
+        String s = "";
+        s = switch (color) {
+            case RED -> "X";
+            case YELLOW -> "O";
+        };
+        return s;
     }
 }

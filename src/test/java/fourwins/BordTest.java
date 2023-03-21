@@ -64,20 +64,19 @@ public class BordTest {
         }
 
     }
-
     @Test
 public void GameBoard1Test() {
     String testBoard1 = "[ ][ ][ ][ ][ ][ ][ ]\n[ ][ ][ ][ ][ ][ ][ ]\n[ ][ ][ ][ ][ ][ ][O]\n[ ][ ][ ][ ][X][ ][X]\n[ ][ ][X][ ][O][X][X]\n[ ][ ][O][O][O][O][X]\n";
-    Assert.assertEquals(b1.toString(b1.buildBord()), testBoard1);
+    Assert.assertEquals(b1.toString(), testBoard1);
 }
 @Test
 public void GameBoard2Test() {
     String testBoard2 = "[ ][ ][ ][ ][ ][ ][ ]\n[ ][ ][ ][ ][X][ ][ ]\n[ ][ ][ ][ ][X][ ][ ]\n[ ][ ][ ][ ][X][ ][O]\n[ ][ ][X][ ][X][X][O]\n[O][X][O][X][O][O][O]\n";
-    Assert.assertEquals(b2.toString(b2.buildBord()), testBoard2);
+    Assert.assertEquals(b2.toString(), testBoard2);
 }
 @Test
 public void GameBoard3Test() {
     String testBoard3 = "[ ][ ][ ][ ][ ][ ][ ]\n[ ][ ][ ][ ][ ][ ][ ]\n[ ][ ][ ][X][ ][ ][O]\n[ ][ ][ ][X][X][O][X]\n[ ][ ][ ][O][O][X][X]\n[ ][ ][ ][O][O][O][X]\n";
-    Assert.assertEquals(b3.toString(b3.buildBord()), testBoard3);
+    Assert.assertEquals(b3.toString(), testBoard3);
 }
 }

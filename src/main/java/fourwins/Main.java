@@ -23,6 +23,8 @@ public class Main {
             b.dropToken(6 ,new Token(Color.RED));
             b.dropToken(6 ,new Token(Color.RED));
             b.dropToken(3 ,new Token(Color.RED));
+            b.dropToken(7 ,new Token(Color.RED));
+            b.dropToken(7 ,new Token(Color.RED));
         }
         catch (ColumnFullException e) {
             System.out.println(e.getMessage());
@@ -35,7 +37,8 @@ public class Main {
 
         //b.bord[1][3] = s;
         //System.out.println(Arrays.toString(b.getBord()[0]));
-        System.out.println(b.toString(b.buildBord()));
+
+        System.out.println(b.toString());
 
         //System.out.println(b.canDrop(1));
 

@@ -2,6 +2,9 @@ package fourwins;
 
 import fourwins.Enums.Color;
 import fourwins.Exception.ColumnFullException;
+import fourwins.Cell;
+
+import javax.sound.midi.Soundbank;
 
 public class Bord extends GameObject{
     private Cell[][] bord;
@@ -24,38 +27,29 @@ public class Bord extends GameObject{
                 }
             }
             //bord[5][6] = new Cell(token);
+        } else {
+            throw new ColumnFullException("Column is full!");
         }
     }
 
     public boolean canDrop(int column) {
         column -= 1;
-        for (int row = 0; row < bord[row].length-1; row++) {
-            if (bord[5-row][column] == null) {
-                return true;
-            }
-        }
-        return false;
+        return bord[0][column] == null;
     }
 
-    public StringBuilder buildBord() {
+    @Override
+    public String toString() {
         StringBuilder sb = new StringBuilder();
-        for (Cell[] x : bord) {
-            for (Cell y : x) {
-                if (y == null) {
-                    sb.append("[ ]");
-                } else if (y.getToken().getColor() == Color.YELLOW) {
-                    sb.append("[O]");
-                } else if (y.getToken().getColor() == Color.RED) {
-                    sb.append("[X]");
+        for (int i = 0; i < bord.length; i++) {
+            for (int j = 0; j < bord[i].length; j++) {
+                if (bord[i][j] == null) {
+                    sb.append("[ ]"); // cheap solution, too stupid atm
+                } else {
+                    sb.append(bord[i][j].toString());
                 }
             }
             sb.append("\n");
         }
-        return sb;
-    }
-
-    @Override
-    public String toString(Object o) {
-        return o.toString();
+        return sb.toString();
     }
 }
