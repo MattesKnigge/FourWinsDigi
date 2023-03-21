@@ -1,7 +1,7 @@
 package fourwins;
 
 public abstract class GameObject {
-    abstract String toString(Object o);
+    public abstract String toString();
 
     //@Override
     //public String toString() {

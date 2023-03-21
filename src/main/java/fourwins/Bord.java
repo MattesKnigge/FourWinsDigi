@@ -3,6 +3,8 @@ package fourwins;
 import fourwins.Enums.Color;
 import fourwins.Exception.ColumnFullException;
 
+import javax.sound.midi.Soundbank;
+
 public class Bord extends GameObject{
     private Cell[][] bord;
 
@@ -24,20 +26,19 @@ public class Bord extends GameObject{
                 }
             }
             //bord[5][6] = new Cell(token);
+        } else {
+            throw new ColumnFullException("Column is full!");
         }
     }
 
     public boolean canDrop(int column) {
         column -= 1;
-        for (int row = 0; row < bord[row].length-1; row++) {
-            if (bord[5-row][column] == null) {
-                return true;
-            }
-        }
-        return false;
+        System.out.println(bord[0][column] == null);
+        return bord[0][column] == null;
     }
 
-    public StringBuilder buildBord() {
+    @Override
+    public String toString() {
         StringBuilder sb = new StringBuilder();
         for (Cell[] x : bord) {
             for (Cell y : x) {
@@ -51,11 +52,6 @@ public class Bord extends GameObject{
             }
             sb.append("\n");
         }
-        return sb;
-    }
-
-    @Override
-    public String toString(Object o) {
-        return o.toString();
+        return sb.toString();
     }
 }
