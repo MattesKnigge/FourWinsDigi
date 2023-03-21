@@ -2,6 +2,7 @@ package fourwins;
 
 import fourwins.Enums.Color;
 import fourwins.Exception.ColumnFullException;
+import fourwins.Cell;
 
 import javax.sound.midi.Soundbank;
 
@@ -33,21 +34,18 @@ public class Bord extends GameObject{
 
     public boolean canDrop(int column) {
         column -= 1;
-        System.out.println(bord[0][column] == null);
         return bord[0][column] == null;
     }
 
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        for (Cell[] x : bord) {
-            for (Cell y : x) {
-                if (y == null) {
-                    sb.append("[ ]");
-                } else if (y.getToken().getColor() == Color.YELLOW) {
-                    sb.append("[O]");
-                } else if (y.getToken().getColor() == Color.RED) {
-                    sb.append("[X]");
+        for (int i = 0; i < bord.length; i++) {
+            for (int j = 0; j < bord[i].length; j++) {
+                if (bord[i][j] == null) {
+                    sb.append("[ ]"); // cheap solution, too stupid atm
+                } else {
+                    sb.append(bord[i][j].toString());
                 }
             }
             sb.append("\n");

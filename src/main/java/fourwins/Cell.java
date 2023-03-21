@@ -1,6 +1,6 @@
 package fourwins;
 
-public class Cell {
+public class Cell extends GameObject {
     private Token token;
 
     public Cell(Token token) {
@@ -12,6 +12,17 @@ public class Cell {
     }
 
     public Token getToken() {
-        return token;
+         return token;
+    }
+
+    @Override
+    public String toString() {
+        String s;
+        if(this.token == null){
+            s = "[ ]";
+        } else {
+            s =  "[" + token.toString() + "]";
+        }
+        return s;
     }
 }
