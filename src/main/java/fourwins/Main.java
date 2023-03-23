@@ -3,6 +3,10 @@ package fourwins;
 import fourwins.Enums.Color;
 import fourwins.Exception.ColumnFullException;
 
+import javax.swing.*;
+import javax.swing.text.StyledEditorKit;
+import java.sql.SQLOutput;
+
 public class Main {
     public static void main(String[] args) {
         Bord b = new Bord();
@@ -14,21 +18,30 @@ public class Main {
             b.dropToken(3 ,new Token(Color.YELLOW));
             b.dropToken(4 ,new Token(Color.YELLOW));
             b.dropToken(5 ,new Token(Color.YELLOW));
-            b.dropToken(5 ,new Token(Color.YELLOW));
-            b.dropToken(6 ,new Token(Color.YELLOW));
-            b.dropToken(7 ,new Token(Color.RED));
-            b.dropToken(7 ,new Token(Color.RED));
-            b.dropToken(7 ,new Token(Color.RED));
-            b.dropToken(7 ,new Token(Color.YELLOW));
-            b.dropToken(6 ,new Token(Color.RED));
             b.dropToken(6 ,new Token(Color.RED));
             b.dropToken(3 ,new Token(Color.RED));
-            b.dropToken(7 ,new Token(Color.RED));
-            b.dropToken(7 ,new Token(Color.RED));
+            b.dropToken(4 ,new Token(Color.YELLOW));
+            b.dropToken(5 ,new Token(Color.YELLOW));
+            b.dropToken(6 ,new Token(Color.YELLOW));
+            b.dropToken(4 ,new Token(Color.YELLOW));
+            b.dropToken(6 ,new Token(Color.RED));
+            b.dropToken(6 ,new Token(Color.YELLOW));
+            b.dropToken(5 ,new Token(Color.YELLOW));
+            b.dropToken(6 ,new Token(Color.YELLOW));
+            b.dropToken(6 ,new Token(Color.YELLOW));
+            b.dropToken(7 ,new Token(Color.YELLOW));
+            //b.dropToken(2 ,new Token(Color.YELLOW));
+            //b.dropToken(7 ,new Token(Color.RED));
         }
         catch (ColumnFullException e) {
             System.out.println(e.getMessage());
         }
+        System.out.println(b.toString());
+        JOptionPane.showMessageDialog(null, "Winner is: "+b.testVictory());
+
+
+
+
 
         //System.out.println(new Token(Color.RED));
 
@@ -38,7 +51,7 @@ public class Main {
         //b.bord[1][3] = s;
         //System.out.println(Arrays.toString(b.getBord()[0]));
 
-        System.out.println(b.toString());
+
 
         //System.out.println(b.canDrop(1));
 

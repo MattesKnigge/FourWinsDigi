@@ -1,6 +1,7 @@
 package fourwins;
 
 import fourwins.Enums.Color;
+import fourwins.Enums.Winner;
 import fourwins.Exception.ColumnFullException;
 import fourwins.Cell;
 
@@ -77,7 +78,7 @@ public class Bord extends GameObject{
         return false;
     }
 
-    public boolean isDiagonalVictory(Color color) {
+    private boolean isDiagonalVictory(Color color) {
         // Check diagonal from top-left to bottom-right
         for (int row = 0; row <= bord.length - 4; row++) {
             for (int column = 0; column <= bord[0].length - 4; column++) {
@@ -116,6 +117,16 @@ public class Bord extends GameObject{
             }
         }
         return false;
+    }
+
+    public Winner testVictory() {
+        if (isColumnVictory(Color.RED) || isRowVictory(Color.RED) || isDiagonalVictory(Color.RED)) {
+            return Winner.RED;
+        } else if (isColumnVictory(Color.YELLOW) || isRowVictory(Color.YELLOW) || isDiagonalVictory(Color.YELLOW)) {
+            return Winner.YELLOW;
+        } else {
+            return Winner.NONE;
+        }
     }
 
 
