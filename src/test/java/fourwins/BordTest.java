@@ -73,7 +73,7 @@ public class BordTest {
 
     @Test
     public void GameBoard1TestWinner() {
-        System.out.println("The winner is: " + b1.testVictory());
+        printWinner(b1);
         Assert.assertNotEquals(b1.testVictory(), Winner.NONE);
     }
 
@@ -85,7 +85,7 @@ public class BordTest {
 
     @Test
     public void GameBoard2TestWinner() {
-        System.out.println("The winner is: " + b2.testVictory());
+        printWinner(b2);
         Assert.assertNotEquals(b2.testVictory(), Winner.NONE);
     }
 
@@ -97,7 +97,15 @@ public class BordTest {
 
     @Test
     public void GameBoard3TestWinner() {
-        System.out.println("The winner is: " + b3.testVictory());
+        printWinner(b3);
         Assert.assertNotEquals(b3.testVictory(), Winner.NONE);
+    }
+
+    /*
+     * Fun method for packaged win conditions
+     * Not part of the exercise.
+     */
+    private void printWinner(Bord bord) {
+        System.out.println("The winner for the following bord:\n\n" + bord.toString() + "\nis: " + bord.testVictory());
     }
 }

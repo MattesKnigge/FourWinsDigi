@@ -3,11 +3,8 @@ package fourwins;
 import fourwins.Enums.Color;
 import fourwins.Enums.Winner;
 import fourwins.Exception.ColumnFullException;
-import fourwins.Cell;
 
-import javax.sound.midi.Soundbank;
-
-public class Bord extends GameObject{
+public class Bord extends GameObject {
     private Cell[][] bord;
 
     public Bord() {
@@ -21,9 +18,9 @@ public class Bord extends GameObject{
     public void dropToken(int column, Token token) throws ColumnFullException {
         if (canDrop(column)) {
             column -= 1;
-            for (int row = 0; row < bord[row].length-1; row++) {
-                if (bord[5-row][column] == null) {
-                    bord[5-row][column] = new Cell(token);
+            for (int row = 0; row < bord[row].length - 1; row++) {
+                if (bord[5 - row][column] == null) {
+                    bord[5 - row][column] = new Cell(token);
                     break;
                 }
             }
@@ -41,16 +38,14 @@ public class Bord extends GameObject{
     private boolean isRowVictory(Color color) {
         int counter = 0;
         for (int row = 0; row < bord.length; row++) {
-            for (int column = 0; column < bord[row].length-1; column++) {
+            for (int column = 0; column < bord[row].length - 1; column++) {
                 if (bord[row][column] == null) {
-                }
-                else if (bord[row][column].getToken().getColor().equals(color)) {
-                    counter = counter+1;
+                } else if (bord[row][column].getToken().getColor().equals(color)) {
+                    counter = counter + 1;
                     if (counter == 4) {
                         return true;
                     }
-                }
-                else {
+                } else {
                 }
             }
             counter = 0;
@@ -61,16 +56,14 @@ public class Bord extends GameObject{
     private boolean isColumnVictory(Color color) {
         int counter = 0;
         for (int column = 0; column < bord[0].length; column++) {
-            for (int row = 0; row < bord.length; row ++) {
+            for (int row = 0; row < bord.length; row++) {
                 if (bord[row][column] == null) {
-                }
-                else if (bord[row][column].getToken().getColor().equals(color)) {
-                    counter = counter+1;
+                } else if (bord[row][column].getToken().getColor().equals(color)) {
+                    counter = counter + 1;
                     if (counter == 4) {
                         return true;
                     }
-                }
-                else {
+                } else {
                 }
             }
             counter = 0;
@@ -129,9 +122,7 @@ public class Bord extends GameObject{
         }
     }
 
-
-
-        @Override
+    @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
         for (int i = 0; i < bord.length; i++) {
