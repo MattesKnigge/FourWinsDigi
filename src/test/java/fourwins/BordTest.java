@@ -97,6 +97,18 @@ public class BordTest {
 
     @Test
     public void GameBoard3TestWinner() {
+        /*
+         * We have encountered a situation where there could be two winners with the current given information.
+         * The issue is that we don't know the order in which the yellow and red tokens are dropped.
+         * This could result in both players connecting four tokens in a row/column/diagonal at the same time.
+         *
+         * We have implemented a solution that makes the most sense with the information given.
+         * But we acknowledge that there could be other valid solutions.
+         * We will continue to refine our program to handle all possible scenarios.
+         *
+         * In future project tasks we will check for the winner after every token drop.
+         * So the following situation would not be possible
+         */
         printWinner(b3);
         Assert.assertNotEquals(b3.testVictory(), Winner.NONE);
     }
