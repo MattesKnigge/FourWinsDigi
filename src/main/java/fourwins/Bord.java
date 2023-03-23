@@ -37,6 +37,29 @@ public class Bord extends GameObject{
         return bord[0][column] == null;
     }
 
+    public boolean isRowVictory(Color color) {
+        int counter = 0;
+        for (int row = 0; row < bord.length; row++) {
+            for (int column = 0; column < bord[row].length-1; column++) {
+                if (bord[row][column] == null) {
+                    continue;
+                }
+                else if (bord[row][column].getToken().getColor() == color) {
+                    counter = counter+1;
+                    if (counter == 4) {
+                        return true;
+                    }
+                } else {
+                    continue;
+                }
+
+            }
+            counter = 0;
+
+        }
+        return false;
+    }
+
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
