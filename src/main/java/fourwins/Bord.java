@@ -44,7 +44,7 @@ public class Bord extends GameObject{
                 if (bord[row][column] == null) {
                     continue;
                 }
-                else if (bord[row][column].getToken().getColor() == color) {
+                else if (bord[row][column].getToken().getColor().equals(color)) {
                     counter = counter+1;
                     if (counter == 4) {
                         return true;
