@@ -57,7 +57,7 @@ public class Bord extends GameObject{
         return false;
     }
 
-    public boolean isColumnVictory(Color color) {
+    private boolean isColumnVictory(Color color) {
         int counter = 0;
         for (int column = 0; column < bord[0].length; column++) {
             for (int row = 0; row < bord.length; row ++) {
@@ -77,7 +77,50 @@ public class Bord extends GameObject{
         return false;
     }
 
-    @Override
+    public boolean isDiagonalVictory(Color color) {
+        // Check diagonal from top-left to bottom-right
+        for (int row = 0; row <= bord.length - 4; row++) {
+            for (int column = 0; column <= bord[0].length - 4; column++) {
+                int counter = 0;
+                for (int offset = 0; offset < 4; offset++) {
+                    if (bord[row + offset][column + offset] == null) {
+                        break;
+                    } else if (bord[row + offset][column + offset].getToken().getColor().equals(color)) {
+                        counter++;
+                    } else {
+                        break;
+                    }
+                    if (counter == 4) {
+                        return true;
+                    }
+                }
+            }
+        }
+
+        // Check diagonal from bottom-left to top-right
+        for (int row = bord.length - 1; row >= 3; row--) {
+            for (int column = 0; column <= bord[0].length - 4; column++) {
+                int counter = 0;
+                for (int offset = 0; offset < 4; offset++) {
+                    if (bord[row - offset][column + offset] == null) {
+                        break;
+                    } else if (bord[row - offset][column + offset].getToken().getColor().equals(color)) {
+                        counter++;
+                    } else {
+                        break;
+                    }
+                    if (counter == 4) {
+                        return true;
+                    }
+                }
+            }
+        }
+        return false;
+    }
+
+
+
+        @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
         for (int i = 0; i < bord.length; i++) {
