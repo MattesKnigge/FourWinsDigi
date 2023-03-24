@@ -63,7 +63,7 @@ public class Bord extends GameObject {
         return bord;
     }
 
-    public void dropToken(int column, Token token) throws ColumnFullException, IllegalMoveException {
+    public void dropToken(Token token, int column) throws ColumnFullException, IllegalMoveException {
         if (testVictory().equals(Winner.RED) || testVictory().equals(Winner.YELLOW)) {
             throw new IllegalMoveException();
         }
@@ -93,9 +93,11 @@ public class Bord extends GameObject {
                 } else if (bord.get(row).get(column).getToken().getColor().equals(color)) {
                     counter = counter + 1;
                     if (counter == 4) {
+                        System.out.println("Is row victory");
                         return true;
                     }
                 } else {
+                    counter = 0;
                 }
             }
             counter = 0;
@@ -111,9 +113,11 @@ public class Bord extends GameObject {
                 } else if (bord.get(row).get(column).getToken().getColor().equals(color)) {
                     counter = counter + 1;
                     if (counter == 4) {
+                        System.out.println("Is column victory");
                         return true;
                     }
                 } else {
+                    counter = 0;
                 }
             }
             counter = 0;
@@ -135,6 +139,7 @@ public class Bord extends GameObject {
                         break;
                     }
                     if (counter == 4) {
+                        System.out.println("Is diagonal victory");
                         return true;
                     }
                 }
@@ -154,6 +159,7 @@ public class Bord extends GameObject {
                         break;
                     }
                     if (counter == 4) {
+                        System.out.println("Is diagonal victory");
                         return true;
                     }
                 }
