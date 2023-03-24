@@ -1,5 +1,9 @@
 package fourwins.Exception;
 
+/**
+ * The exception that is thrown when a player tries to make an illegal move.
+ */
+
 public class IllegalMoveException extends Exception {
     public IllegalMoveException() {
     }

@@ -1,5 +1,9 @@
 package fourwins.Exception;
 
+/**
+ * The exception that is thrown when a column is full.
+ * The exception is thrown when a player tries to add a disc to a full column.
+ */
 public class ColumnFullException extends Exception {
 
     public ColumnFullException() {
