@@ -19,9 +19,9 @@ import java.util.stream.Stream;
  * It also contains the methods to drop tokens and check for a winner.
  */
 public class Bord extends GameObject {
-    private ArrayList<ArrayList<Cell>> bord;
+    private final ArrayList<ArrayList<Cell>> bord;
 
-    private HashMap<Color, ArrayList<Token>> tokenStore = new HashMap<>();
+    private final HashMap<Color, ArrayList<Token>> tokenStore = new HashMap<>();
 
     /**
      * Constructor for Bord
