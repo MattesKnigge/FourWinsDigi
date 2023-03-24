@@ -50,6 +50,14 @@ public class Bord extends GameObject {
         }
     }
 
+    public boolean isTie() {
+        if (hasToken(Color.RED) && hasToken(Color.YELLOW)) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+
     public ArrayList<ArrayList<Cell>> getBord() {
         return bord;
     }
