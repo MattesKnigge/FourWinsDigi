@@ -42,6 +42,14 @@ public class Bord extends GameObject {
         }
     }
 
+    public boolean hasToken(Color color) {
+        if (color == Color.RED) {
+            return (tokenStore.get(Color.RED).size() != 0);
+        } else {
+            return (tokenStore.get(Color.YELLOW).size() != 0);
+        }
+    }
+
     public ArrayList<ArrayList<Cell>> getBord() {
         return bord;
     }
