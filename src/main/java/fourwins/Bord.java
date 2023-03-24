@@ -1,51 +1,259 @@
 package fourwins;
 
 import fourwins.Enums.Color;
+import fourwins.Enums.Winner;
 import fourwins.Exception.ColumnFullException;
-import fourwins.Cell;
+import fourwins.Exception.IllegalMoveException;
 
-import javax.sound.midi.Soundbank;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+// write comments for this class
 
-public class Bord extends GameObject{
-    private Cell[][] bord;
+/**
+ * @author Jannes Bikker and Mattes Knigge
+ * @version 1.0
+ * @since 1.0
+ * The class Bord is the class that contains the game board and the tokens.
+ * It also contains the methods to drop tokens and check for a winner.
+ */
+public class Bord extends GameObject {
+    private final ArrayList<ArrayList<Cell>> bord; // The game board is an ArrayList of ArrayLists of Cells
 
+    private final HashMap<Color, ArrayList<Token>> tokenStore = new HashMap<>(); // The tokenStore is a HashMap that contains the color as key and an ArrayList of tokens as value
+
+    /**
+     * Constructor for Bord
+     * Creates a new bord with 6 rows and 7 columns.
+     * Creates 21 tokens for each color and adds them to the tokenStore.
+     * The tokenStore is a HashMap that contains the color as key and an ArrayList of tokens as value.
+     * The ArrayList of tokens is used to keep track of the tokens that are still available.
+     * The tokens are added to the bord in the constructor.
+     */
     public Bord() {
-        this.bord = new Cell[6][7];
+        this.bord = new ArrayList<>();
+        for (int i = 0; i < 6; i++) {
+            ArrayList<Cell> row = new ArrayList<>();
+            for (int j = 0; j < 7; j++) {
+                row.add(null);
+            }
+            bord.add(row);
+        }
+        this.tokenStore.put(Color.RED, Stream.generate(() -> new Token(Color.RED)) // generate a stream of tokens
+                .limit(21) // 21 tokens per color (red in this case)
+                .collect(Collectors.toCollection(ArrayList::new))); // collect the stream to an ArrayList
+
+        this.tokenStore.put(Color.YELLOW, Stream.generate(() -> new Token(Color.YELLOW))
+                .limit(21)
+                .collect(Collectors.toCollection(ArrayList::new)));
     }
 
-    public Cell[][] getBord() {
+    /**
+     * gets bord
+     *
+     * @return the bord
+     */
+    public ArrayList<ArrayList<Cell>> getBord() {
         return bord;
     }
 
-    public void dropToken(int column, Token token) throws ColumnFullException {
+    /**
+     * gets token from tokenStore
+     *
+     * @param color the color of the token
+     * @return the token
+     */
+    public Token getToken(Color color) {
+        return tokenStore.get(color).remove(0);
+    }
+
+    /**
+     * Checks if a player has Tokens left
+     *
+     * @param color the color of the player
+     * @return true if the player has tokens left, false if not
+     */
+    public boolean hasToken(Color color) {
+        return !tokenStore.get(color).isEmpty();
+
+    }
+
+    /**
+     * Checks if game is a tie
+     *
+     * @return true if game is a tie, false if not
+     */
+    public boolean isTie() {
+        return (!hasToken(Color.RED) && !hasToken(Color.YELLOW));
+    }
+
+    /**
+     * drops a token in a column if possible
+     *
+     * @param token  the token to be dropped
+     * @param column the column to drop the token in
+     * @throws ColumnFullException
+     * @throws IllegalMoveException
+     */
+    public void dropToken(Token token, int column) throws ColumnFullException, IllegalMoveException {
+        if (testVictory().equals(Winner.RED) || testVictory().equals(Winner.YELLOW)) {
+            throw new IllegalMoveException();
+        }
         if (canDrop(column)) {
             column -= 1;
-            for (int row = 0; row < bord[row].length-1; row++) {
-                if (bord[5-row][column] == null) {
-                    bord[5-row][column] = new Cell(token);
+            for (int row = 0; row < bord.size(); row++) {
+                if (bord.get(5 - row).get(column) == null) {
+                    bord.get(5 - row).set(column, new Cell(token));
                     break;
                 }
             }
-            //bord[5][6] = new Cell(token);
         } else {
             throw new ColumnFullException("Column is full!");
         }
     }
 
+    /**
+     * Checks if player can drop a token in a column
+     *
+     * @param column the column to be checked
+     * @return true if player can drop a token in the column, false if not
+     */
     public boolean canDrop(int column) {
         column -= 1;
-        return bord[0][column] == null;
+        return bord.get(0).get(column) == null;
     }
 
+    /**
+     * Checks if it is a victory via a row
+     *
+     * @param color the color of the player
+     * @return true if it is a victory via a row, false if not
+     */
+    private boolean isRowVictory(Color color) {
+        int counter = 0;
+        for (int row = 0; row < bord.size(); row++) {
+            for (int column = 0; column < bord.get(row).size() - 1; column++) {
+                if (bord.get(row).get(column) == null) {
+                } else if (bord.get(row).get(column).getToken().getColor().equals(color)) {
+                    counter = counter + 1;
+                    if (counter == 4) {
+                        return true;
+                    }
+                } else {
+                    counter = 0;
+                }
+            }
+            counter = 0;
+        }
+        return false;
+    }
+
+    /**
+     * Checks if it is a victory via a column
+     *
+     * @param color the color of the player
+     * @return true if it is a victory via a column, false if not
+     */
+    private boolean isColumnVictory(Color color) {
+        int counter = 0;
+        for (int column = 0; column < bord.get(0).size(); column++) {
+            for (int row = 0; row < bord.size(); row++) {
+                if (bord.get(row).get(column) == null) {
+                } else if (bord.get(row).get(column).getToken().getColor().equals(color)) {
+                    counter = counter + 1;
+                    if (counter == 4) {
+                        return true;
+                    }
+                } else {
+                    counter = 0;
+                }
+            }
+            counter = 0;
+        }
+        return false;
+    }
+
+    /**
+     * Checks if it is a victory via a diagonal
+     *
+     * @param color the color of the player
+     * @return true if it is a victory via a diagonal, false if not
+     */
+    private boolean isDiagonalVictory(Color color) {
+        // Check diagonal from top-left to bottom-right
+        for (int row = 0; row <= bord.size() - 4; row++) {
+            for (int column = 0; column <= bord.get(0).size() - 4; column++) {
+                int counter = 0;
+                for (int offset = 0; offset < 4; offset++) {
+                    if (bord.get(row + offset).get(column + offset) == null) {
+                        break;
+                    } else if (bord.get(row + offset).get(column + offset).getToken().getColor().equals(color)) {
+                        counter++;
+                    } else {
+                        break;
+                    }
+                    if (counter == 4) {
+                        return true;
+                    }
+                }
+            }
+        }
+
+        // Check diagonal from bottom-left to top-right
+        for (int row = bord.size() - 1; row >= 3; row--) {
+            for (int column = 0; column <= bord.get(0).size() - 4; column++) {
+                int counter = 0;
+                for (int offset = 0; offset < 4; offset++) {
+                    if (bord.get(row - offset).get(column + offset) == null) {
+                        break;
+                    } else if (bord.get(row - offset).get(column + offset).getToken().getColor().equals(color)) {
+                        counter++;
+                    } else {
+                        break;
+                    }
+                    if (counter == 4) {
+                        return true;
+                    }
+                }
+            }
+        }
+        return false;
+    }
+
+    /**
+     * Checks if a player has won
+     *
+     * @return true if a player has won, false if not
+     */
+    public Winner testVictory() {
+        if (isTie()) {
+            return Winner.TIE;
+        } else {
+            if (isColumnVictory(Color.RED) || isRowVictory(Color.RED) || isDiagonalVictory(Color.RED)) {
+                return Winner.RED;
+            } else if (isColumnVictory(Color.YELLOW) || isRowVictory(Color.YELLOW) || isDiagonalVictory(Color.YELLOW)) {
+                return Winner.YELLOW;
+            } else {
+                return Winner.NONE;
+            }
+        }
+    }
+
+    /**
+     * toString method
+     *
+     * @return the board as a string
+     */
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        for (int i = 0; i < bord.length; i++) {
-            for (int j = 0; j < bord[i].length; j++) {
-                if (bord[i][j] == null) {
+        for (int i = 0; i < bord.size(); i++) {
+            for (int j = 0; j < bord.get(i).size(); j++) {
+                if (bord.get(i).get(j) == null) {
                     sb.append("[ ]"); // cheap solution, too stupid atm
                 } else {
-                    sb.append(bord[i][j].toString());
+                    sb.append(bord.get(i).get(j).toString());
                 }
             }
             sb.append("\n");
