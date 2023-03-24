@@ -159,12 +159,16 @@ public class Bord extends GameObject {
     }
 
     public Winner testVictory() {
-        if (isColumnVictory(Color.RED) || isRowVictory(Color.RED) || isDiagonalVictory(Color.RED)) {
-            return Winner.RED;
-        } else if (isColumnVictory(Color.YELLOW) || isRowVictory(Color.YELLOW) || isDiagonalVictory(Color.YELLOW)) {
-            return Winner.YELLOW;
+        if (isTie()) {
+            return Winner.TIE;
         } else {
-            return Winner.NONE;
+            if (isColumnVictory(Color.RED) || isRowVictory(Color.RED) || isDiagonalVictory(Color.RED)) {
+                return Winner.RED;
+            } else if (isColumnVictory(Color.YELLOW) || isRowVictory(Color.YELLOW) || isDiagonalVictory(Color.YELLOW)) {
+                return Winner.YELLOW;
+            } else {
+                return Winner.NONE;
+            }
         }
     }
 
