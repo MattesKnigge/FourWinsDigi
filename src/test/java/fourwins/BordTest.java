@@ -7,6 +7,10 @@ import fourwins.Exception.IllegalMoveException;
 import org.junit.Assert;
 import org.junit.Test;
 
+/**
+ * This class tests the game board.
+ */
+
 public class BordTest {
 
     @Test
