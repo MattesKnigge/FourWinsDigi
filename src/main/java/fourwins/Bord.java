@@ -32,6 +32,16 @@ public class Bord extends GameObject {
                 .collect(Collectors.toCollection(ArrayList::new)));
     }
 
+    public Token getToken(Color color) {
+        if (color == Color.RED) {
+            return tokenStore.get(Color.RED).remove(0);
+        } else if (color == Color.YELLOW) {
+            return tokenStore.get(Color.YELLOW).remove(0);
+        } else {
+            return null;
+        }
+    }
+
     public ArrayList<ArrayList<Cell>> getBord() {
         return bord;
     }
