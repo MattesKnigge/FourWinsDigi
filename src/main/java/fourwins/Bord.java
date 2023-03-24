@@ -3,6 +3,7 @@ package fourwins;
 import fourwins.Enums.Color;
 import fourwins.Enums.Winner;
 import fourwins.Exception.ColumnFullException;
+import fourwins.Exception.IllegalMoveException;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -62,7 +63,10 @@ public class Bord extends GameObject {
         return bord;
     }
 
-    public void dropToken(int column, Token token) throws ColumnFullException {
+    public void dropToken(int column, Token token) throws ColumnFullException, IllegalMoveException {
+        if (testVictory().equals(Winner.RED) || testVictory().equals(Winner.YELLOW)) {
+            throw new IllegalMoveException();
+        }
         if (canDrop(column)) {
             column -= 1;
             for (int row = 0; row < bord.size(); row++) {
