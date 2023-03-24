@@ -19,9 +19,9 @@ import java.util.stream.Stream;
  * It also contains the methods to drop tokens and check for a winner.
  */
 public class Bord extends GameObject {
-    private final ArrayList<ArrayList<Cell>> bord;
+    private final ArrayList<ArrayList<Cell>> bord; // The game board is an ArrayList of ArrayLists of Cells
 
-    private final HashMap<Color, ArrayList<Token>> tokenStore = new HashMap<>();
+    private final HashMap<Color, ArrayList<Token>> tokenStore = new HashMap<>(); // The tokenStore is a HashMap that contains the color as key and an ArrayList of tokens as value
 
     /**
      * Constructor for Bord
@@ -65,13 +65,7 @@ public class Bord extends GameObject {
      * @return the token
      */
     public Token getToken(Color color) {
-        if (color == Color.RED) {
-            return tokenStore.get(Color.RED).remove(0);
-        } else if (color == Color.YELLOW) {
-            return tokenStore.get(Color.YELLOW).remove(0);
-        } else {
-            return null;
-        }
+        return tokenStore.get(color).remove(0);
     }
 
     /**
@@ -81,11 +75,8 @@ public class Bord extends GameObject {
      * @return true if the player has tokens left, false if not
      */
     public boolean hasToken(Color color) {
-        if (color == Color.RED) {
-            return (tokenStore.get(Color.RED).size() != 0);
-        } else {
-            return (tokenStore.get(Color.YELLOW).size() != 0);
-        }
+        return !tokenStore.get(color).isEmpty();
+
     }
 
     /**
@@ -94,11 +85,7 @@ public class Bord extends GameObject {
      * @return true if game is a tie, false if not
      */
     public boolean isTie() {
-        if (hasToken(Color.RED) && hasToken(Color.YELLOW)) {
-            return false;
-        } else {
-            return true;
-        }
+        return (!hasToken(Color.RED) && !hasToken(Color.YELLOW));
     }
 
     /**
