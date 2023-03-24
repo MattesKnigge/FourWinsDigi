@@ -7,11 +7,21 @@ import fourwins.Exception.IllegalMoveException;
 import java.io.IOException;
 import java.util.Scanner;
 
+/**
+ * Console part of the game.
+ */
+
 public class ConsoleGame extends Game {
     public ConsoleGame(Bord bord) {
         super(bord);
     }
 
+    /**
+     * start the game with two players either human or computer
+     *
+     * @param player1 player 1 (computer or human)
+     * @param player2 player 2 (computer or human)
+     */
     @Override
     public void doGame(Player player1, Player player2) {
         this.player1 = player1;
@@ -22,9 +32,13 @@ public class ConsoleGame extends Game {
         Scanner scanner = new Scanner(System.in);
         //int playerIn = scanner.nextInt();
 
+        // right now the game is set to play against a computer player
+        // for computer vs player, switch out the line below for the line above
+        // it enables funtion to choose which player starts
+
         int playerIn = 1; // TODO: remove this line and uncomment the line above to play against a human player
 
-        if (playerIn == 1) {
+        if (playerIn == 1) { //
             this.currentPlayer = player1;
         } else if (playerIn == 2) {
             this.currentPlayer = player2;

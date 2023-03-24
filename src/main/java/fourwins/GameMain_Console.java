@@ -2,6 +2,10 @@ package fourwins;
 
 import fourwins.Enums.Color;
 
+/**
+ * GameMain_Console class
+ * starts a game with console input players
+ */
 public class GameMain_Console {
     public static void main(String[] args) {
         Bord bord = new Bord();
