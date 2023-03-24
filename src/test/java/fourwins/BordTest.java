@@ -14,6 +14,16 @@ import org.junit.Test;
 public class BordTest {
 
     @Test
+    public void MocGameTest() {
+        Bord mocBord = new Bord();
+        Player player1 = new MocPlayer(Color.RED, mocBord, 1);
+        Player player2 = new MocPlayer(Color.YELLOW, mocBord, 2);
+        Game game = new ConsoleGame(mocBord);
+        game.doGame(player1, player2);
+        Assert.assertEquals(Winner.RED, mocBord.testVictory());
+    }
+
+    @Test
     public void GameBoard1() throws ColumnFullException, IllegalMoveException {
         Bord b1 = new Bord();
 
