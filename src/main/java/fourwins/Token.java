@@ -1,9 +1,8 @@
 package fourwins;
 
-import com.sun.source.tree.ReturnTree;
 import fourwins.Enums.Color;
 
-public class Token extends GameObject{
+public class Token extends GameObject {
     private final Color color;
 
 
