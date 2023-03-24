@@ -138,7 +138,6 @@ public class Bord extends GameObject {
                 } else if (bord.get(row).get(column).getToken().getColor().equals(color)) {
                     counter = counter + 1;
                     if (counter == 4) {
-                        System.out.println("Is row victory");
                         return true;
                     }
                 } else {
@@ -164,7 +163,6 @@ public class Bord extends GameObject {
                 } else if (bord.get(row).get(column).getToken().getColor().equals(color)) {
                     counter = counter + 1;
                     if (counter == 4) {
-                        System.out.println("Is column victory");
                         return true;
                     }
                 } else {
@@ -196,7 +194,6 @@ public class Bord extends GameObject {
                         break;
                     }
                     if (counter == 4) {
-                        System.out.println("Is diagonal victory");
                         return true;
                     }
                 }
@@ -216,7 +213,6 @@ public class Bord extends GameObject {
                         break;
                     }
                     if (counter == 4) {
-                        System.out.println("Is diagonal victory");
                         return true;
                     }
                 }
