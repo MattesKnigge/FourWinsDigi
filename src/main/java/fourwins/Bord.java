@@ -10,11 +10,19 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class Bord extends GameObject {
-    private Cell[][] bord;
+    private ArrayList<ArrayList<Cell>> bord;
+
     private HashMap<Color, ArrayList<Token>> tokenStore = new HashMap<>();
 
     public Bord() {
-        this.bord = new Cell[6][7];
+        this.bord = new ArrayList<>();
+        for (int i = 0; i < 6; i++) {
+            ArrayList<Cell> row = new ArrayList<>();
+            for (int j = 0; j < 7; j++) {
+                row.add(null);
+            }
+            bord.add(row);
+        }
         this.tokenStore.put(Color.RED, Stream.generate(() -> new Token(Color.RED))
                 .limit(21)
                 .collect(Collectors.toCollection(ArrayList::new)));
@@ -24,20 +32,19 @@ public class Bord extends GameObject {
                 .collect(Collectors.toCollection(ArrayList::new)));
     }
 
-    public Cell[][] getBord() {
+    public ArrayList<ArrayList<Cell>> getBord() {
         return bord;
     }
 
     public void dropToken(int column, Token token) throws ColumnFullException {
         if (canDrop(column)) {
             column -= 1;
-            for (int row = 0; row < bord[row].length - 1; row++) {
-                if (bord[5 - row][column] == null) {
-                    bord[5 - row][column] = new Cell(token);
+            for (int row = 0; row < bord.size(); row++) {
+                if (bord.get(5 - row).get(column) == null) {
+                    bord.get(5 - row).set(column, new Cell(token));
                     break;
                 }
             }
-            //bord[5][6] = new Cell(token);
         } else {
             throw new ColumnFullException("Column is full!");
         }
@@ -45,15 +52,15 @@ public class Bord extends GameObject {
 
     public boolean canDrop(int column) {
         column -= 1;
-        return bord[0][column] == null;
+        return bord.get(0).get(column) == null;
     }
 
     private boolean isRowVictory(Color color) {
         int counter = 0;
-        for (int row = 0; row < bord.length; row++) {
-            for (int column = 0; column < bord[row].length - 1; column++) {
-                if (bord[row][column] == null) {
-                } else if (bord[row][column].getToken().getColor().equals(color)) {
+        for (int row = 0; row < bord.size(); row++) {
+            for (int column = 0; column < bord.get(row).size() - 1; column++) {
+                if (bord.get(row).get(column) == null) {
+                } else if (bord.get(row).get(column).getToken().getColor().equals(color)) {
                     counter = counter + 1;
                     if (counter == 4) {
                         return true;
@@ -68,10 +75,10 @@ public class Bord extends GameObject {
 
     private boolean isColumnVictory(Color color) {
         int counter = 0;
-        for (int column = 0; column < bord[0].length; column++) {
-            for (int row = 0; row < bord.length; row++) {
-                if (bord[row][column] == null) {
-                } else if (bord[row][column].getToken().getColor().equals(color)) {
+        for (int column = 0; column < bord.get(0).size(); column++) {
+            for (int row = 0; row < bord.size(); row++) {
+                if (bord.get(row).get(column) == null) {
+                } else if (bord.get(row).get(column).getToken().getColor().equals(color)) {
                     counter = counter + 1;
                     if (counter == 4) {
                         return true;
@@ -86,13 +93,13 @@ public class Bord extends GameObject {
 
     private boolean isDiagonalVictory(Color color) {
         // Check diagonal from top-left to bottom-right
-        for (int row = 0; row <= bord.length - 4; row++) {
-            for (int column = 0; column <= bord[0].length - 4; column++) {
+        for (int row = 0; row <= bord.size() - 4; row++) {
+            for (int column = 0; column <= bord.get(0).size() - 4; column++) {
                 int counter = 0;
                 for (int offset = 0; offset < 4; offset++) {
-                    if (bord[row + offset][column + offset] == null) {
+                    if (bord.get(row + offset).get(column + offset) == null) {
                         break;
-                    } else if (bord[row + offset][column + offset].getToken().getColor().equals(color)) {
+                    } else if (bord.get(row + offset).get(column + offset).getToken().getColor().equals(color)) {
                         counter++;
                     } else {
                         break;
@@ -105,13 +112,13 @@ public class Bord extends GameObject {
         }
 
         // Check diagonal from bottom-left to top-right
-        for (int row = bord.length - 1; row >= 3; row--) {
-            for (int column = 0; column <= bord[0].length - 4; column++) {
+        for (int row = bord.size() - 1; row >= 3; row--) {
+            for (int column = 0; column <= bord.get(0).size() - 4; column++) {
                 int counter = 0;
                 for (int offset = 0; offset < 4; offset++) {
-                    if (bord[row - offset][column + offset] == null) {
+                    if (bord.get(row - offset).get(column + offset) == null) {
                         break;
-                    } else if (bord[row - offset][column + offset].getToken().getColor().equals(color)) {
+                    } else if (bord.get(row - offset).get(column + offset).getToken().getColor().equals(color)) {
                         counter++;
                     } else {
                         break;
@@ -138,12 +145,12 @@ public class Bord extends GameObject {
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        for (int i = 0; i < bord.length; i++) {
-            for (int j = 0; j < bord[i].length; j++) {
-                if (bord[i][j] == null) {
+        for (int i = 0; i < bord.size(); i++) {
+            for (int j = 0; j < bord.get(i).size(); j++) {
+                if (bord.get(i).get(j) == null) {
                     sb.append("[ ]"); // cheap solution, too stupid atm
                 } else {
-                    sb.append(bord[i][j].toString());
+                    sb.append(bord.get(i).get(j).toString());
                 }
             }
             sb.append("\n");
