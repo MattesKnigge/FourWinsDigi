@@ -4,11 +4,24 @@ import fourwins.Enums.Color;
 import fourwins.Enums.Winner;
 import fourwins.Exception.ColumnFullException;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+
 public class Bord extends GameObject {
     private Cell[][] bord;
+    private HashMap<Color, ArrayList<Token>> tokenStore = new HashMap<>();
 
     public Bord() {
         this.bord = new Cell[6][7];
+        this.tokenStore.put(Color.RED, Stream.generate(() -> new Token(Color.RED))
+                .limit(21)
+                .collect(Collectors.toCollection(ArrayList::new)));
+
+        this.tokenStore.put(Color.YELLOW, Stream.generate(() -> new Token(Color.YELLOW))
+                .limit(21)
+                .collect(Collectors.toCollection(ArrayList::new)));
     }
 
     public Cell[][] getBord() {
