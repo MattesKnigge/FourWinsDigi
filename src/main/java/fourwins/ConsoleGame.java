@@ -60,7 +60,7 @@ public class ConsoleGame extends Game {
             } catch (IllegalMoveException e) {
                 System.out.println("Illegal move, try again.");
             } catch (IOException e) {
-                throw new RuntimeException(e);
+                System.out.println("Invalid input, try again.");
             }
             swapPlayer();
         }
